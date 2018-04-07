@@ -9,7 +9,7 @@ try:
 except ImportError:
     flags = None
 
-CREDENTIALS_DIRECTORY_NAME = '.credentials'
+CREDENTIALS_DIRECTORY_NAME = '.credentialstest'
 CLIENT_SECRET_FILE_NAME = 'client_secrets.json'
 BASE_URL = 'https://www.googleapis.com/auth/'
 SCOPE_LIST = ['https://www.googleapis.com/auth/drive',
@@ -19,7 +19,16 @@ SCOPE_LIST = ['https://www.googleapis.com/auth/drive',
               'https://www.googleapis.com/auth/drive.metadata.readonly',
               'https://www.googleapis.com/auth/drive.photos.readonly',
               'https://www.googleapis.com/auth/drive.readonly',
-              'https://www.googleapis.com/auth/drive.scripts']
+              'https://www.googleapis.com/auth/drive.scripts',
+              'https://www.googleapis.com/auth/gmail.readonly',
+              'https://www.googleapis.com/auth/gmail.compose',
+              'https://www.googleapis.com/auth/gmail.send',
+              'https://www.googleapis.com/auth/gmail.insert',
+              'https://www.googleapis.com/auth/gmail.labels',
+              'https://www.googleapis.com/auth/gmail.modify',
+              'https://www.googleapis.com/auth/gmail.metadata',
+              'https://www.googleapis.com/auth/gmail.settings.basic',
+              'https://www.googleapis.com/auth/gmail.settings.sharing']
 
 
 def get_credentials(scope):
@@ -52,10 +61,10 @@ def get_credentials(scope):
         flow = client.flow_from_clientsecrets(clients_secret_path, scope)
         flow.user_agent = 'Google API Python'
         if flags:
-            credentials = tools.run(flow, store, flags)
+            credentials = tools.run_flow(flow, store, flags)
         else:
             credentials = tools.run(flow, store)
-            result = f'The credentials have been created and stored here {cred_file_path}'
+            result = f'The credentials file has to be created and stored here {cred_file_path}'
             print(result)
 
     return credentials
